@@ -1,13 +1,10 @@
 import { useCart } from "@/hooks/use-cart";
 import { formatPrice } from "@/lib/utils";
-import { Product } from "@/lib/types";
 import { ImageIcon, X } from "lucide-react";
 import Image from "next/image";
+import { Product } from "@/lib/types";
 
 const CartItem = ({ product }: { product: Product }) => {
-  // @ts-ignore
-  const { imageUrl } = product.imageUrl;
-
   const { removeItem } = useCart();
 
   return (
@@ -15,9 +12,9 @@ const CartItem = ({ product }: { product: Product }) => {
       <div className="flex items-start justify-between gap-4">
         <div className="flex items-center space-x-4">
           <div className="relative aspect-square h-16 w-16 min-w-fit overflow-hidden rounded">
-            {typeof imageUrl !== "string" && imageUrl ? (
+            {typeof product.imageUrl !== "string" && product.imageUrl ? (
               <Image
-                src={imageUrl}
+                src={product.imageUrl}
                 alt={product.title}
                 fill
                 className="absolute object-cover"
@@ -36,10 +33,11 @@ const CartItem = ({ product }: { product: Product }) => {
             <span className="line-clamp-1 text-sm font-medium mb-1">
               {product.title}
             </span>
+            <span>Quantity {product.quantity}</span>
 
             <div className="mt-4 text-xs text-muted-foreground">
               <button
-                onClick={() => removeItem(product.id)}
+                onClick={() => removeItem(product)}
                 className="flex items-center gap-0.5"
               >
                 <X className="w-3 h-4" />

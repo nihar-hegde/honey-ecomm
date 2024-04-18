@@ -1,4 +1,5 @@
 "use client";
+
 import { ShoppingCart } from "lucide-react";
 import {
   Sheet,
@@ -19,8 +20,8 @@ import CartItem from "./CartItem";
 import { useEffect, useState } from "react";
 
 const Cart = () => {
-  const { items } = useCart();
-  const itemCount = items.length;
+  const { cart, totalPrice } = useCart();
+  const itemCount = cart.length;
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
@@ -28,13 +29,9 @@ const Cart = () => {
     setIsMounted(true);
   }, []);
 
-  const cartTotal = items.reduce(
-    (total, { product }) => total + product.price,
-    0,
-  );
+  const fee = 100;
 
-  const fee = 1;
-
+  console.log(cart);
   return (
     <Sheet>
       <SheetTrigger className="group -m-2 flex items-center p-2">
@@ -54,8 +51,8 @@ const Cart = () => {
           <>
             <div className="flex w-full flex-col pr-6">
               <ScrollArea>
-                {items.map(({ product }) => (
-                  <CartItem product={product} key={product.id} />
+                {cart.map((item) => (
+                  <CartItem product={item} key={item.id} />
                 ))}
               </ScrollArea>
             </div>
@@ -64,15 +61,11 @@ const Cart = () => {
               <div className="space-y-1.5 text-sm">
                 <div className="flex">
                   <span className="flex-1">Shipping</span>
-                  <span>Free</span>
-                </div>
-                <div className="flex">
-                  <span className="flex-1">Transaction Fee</span>
                   <span>{formatPrice(fee)}</span>
                 </div>
                 <div className="flex">
                   <span className="flex-1">Total</span>
-                  <span>{formatPrice(cartTotal + fee)}</span>
+                  <span>{formatPrice(totalPrice + fee)}</span>
                 </div>
               </div>
 
@@ -96,11 +89,7 @@ const Cart = () => {
               aria-hidden="true"
               className="relative mb-4 h-60 w-60 text-muted-foreground"
             >
-              <Image
-                src="/hippo-empty-cart.png"
-                fill
-                alt="empty shopping cart hippo"
-              />
+              <Image src="/honey.jpeg" fill alt="empty shopping cart hippo" />
             </div>
             <div className="text-xl font-semibold">Your cart is empty</div>
             <SheetTrigger asChild>

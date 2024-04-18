@@ -21,7 +21,7 @@ export const ProductCard = ({ product }: { product: Product }) => {
           <p>
             <span className="font-bold">₹</span> {product.price}
           </p>
-          <p>only {product.quantity} remaning</p>
+          <p>only {product.stock} remaning</p>
         </div>
         <AddToCartButton product={product} />
       </CardContent>
